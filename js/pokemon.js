@@ -3,7 +3,7 @@ $.get('http://pokeapi.co/api/v2/characteristic/1/', pokedexDescription);
 
 
 function pokedexData(data){
-	console.log("Funciona!");
+
 	var tipoPokemon 	 = data;
 	var name			 = tipoPokemon.forms[0].name;
 	var type1 	 		 = tipoPokemon.types[0].type.name;
@@ -14,6 +14,7 @@ function pokedexData(data){
 	$(".type").append(type1+" / "+type2);
 	$("h2").before("<img class='card-img-top' src='" + pokeImg + "'>");
 }
+
 function pokedexDescription (data){
 	console.log("Funciona tambien!");
 	var descript 		 = data.descriptions[1].description;
@@ -30,9 +31,14 @@ function choose(){
 		for (var i=0; i< dataType.length; i++){
 			if (dataType[i].name == $("select").val()){
 				$.get(dataType[i].url, findType);
-				function findType(data){
-					console.log("Lo has encontradoooooo!!");
-					console.log(data);
+				function findType(data){													//Devuelve los datos del tipo seleccionado
+
+					var typeUrl = data.pokemon;
+					for (var i=0; i< 10; i++)												//typeUrl.length para sacarlos todos
+
+					$.get(typeUrl[i].pokemon.url, pokedexData);								//Se llama a cada una de las url y se ejecuta la funcion
+
+
 				}
 
 				
@@ -40,7 +46,6 @@ function choose(){
 				console.log("encontrado el tipo "+ $("select").val() );
 			}
 		}
-		console.log(dataType);
 	
 	}
 }
