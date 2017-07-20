@@ -2,13 +2,6 @@ $.get('http://pokeapi.co/api/v2/pokemon/1/', pokedexData);
 $.get('http://pokeapi.co/api/v2/characteristic/1/', pokedexDescription);
 
 
-/*$.ajax({
-	dataType: "json",
-	url: "http://pokeapi.co/api/v2/pokemon/1/",
-	//data: data,
-	success: pokedexData 
-});*/
-
 function pokedexData(data){
 	console.log("Funciona!");
 	var tipoPokemon 	 = data;
@@ -26,4 +19,28 @@ function pokedexDescription (data){
 	var descript 		 = data.descriptions[1].description;
 
 	$(".description").append(descript);	
+}
+
+$("select").change(choose);
+
+function choose(){
+	$.get('http://pokeapi.co/api/v2/type/', selectType);
+	function selectType(data){
+		var dataType     = data.results;
+		for (var i=0; i< dataType.length; i++){
+			if (dataType[i].name == $("select").val()){
+				$.get(dataType[i].url, findType);
+				function findType(data){
+					console.log("Lo has encontradoooooo!!");
+					console.log(data);
+				}
+
+				
+
+				console.log("encontrado el tipo "+ $("select").val() );
+			}
+		}
+		console.log(dataType);
+	
+	}
 }
